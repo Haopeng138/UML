@@ -1,0 +1,17 @@
+@startuml EsquemaNavegacion
+left to right direction
+
+[*] --> login
+login --> principal
+principal --> proyecto
+proyecto --> compania
+principal --> compania
+compania --> analisisFinanciero
+analisisFinanciero --> dashboard
+dashboard --> peers
+compania --> cashflow
+compania --> valoracion
+compania --> esg
+
+
+@enduml

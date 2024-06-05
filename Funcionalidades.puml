@@ -1,0 +1,63 @@
+@startuml ""
+left to right direction
+actor Usuario as u
+package "Funcionalidades" {
+  usecase "Analisis financiero" as UC1
+  usecase "Modelizacion de cashflow" as UC2
+  usecase "Valoracion de compañia" as UC3
+  usecase "ESG" as UC4
+}
+
+package "Analisis financiero" {
+    usecase "Visualizacion de KPIs" as UC1.1
+    usecase "Analisis de ratios" as UC1.2
+    usecase "Visualizacion de gastos e incresos" as UC1.3
+    usecase "Balance" as UC1.4
+    usecase "Comparacion de ratios" as UC1.5
+    usecase "Comparacion de balances" as UC1.6
+    usecase "Comparacion de ganancias y perdidas" as UC1.7
+    usecase "Comparacion global" as UC1.8
+    usecase "Compañias del sector" as UC1.9
+}
+
+package "Modelizacion de cashflow" {
+    usecase "Modelizacion de cashflow y hipotesis" as UC2.1
+    usecase "Modelizacion de cashflow con grafos" as UC2.2
+}
+
+package "Valoracion de compañia" {
+    usecase "Modelizacion de cashflow y hipotesis" as UC3.1
+    usecase "Valor Actual Neto" as UC3.2
+    usecase "Modelizacion de cashflow con grafos" as UC3.3
+    usecase "Analisis de compañia" as UC3.4
+    usecase "Compañias del sector" as UC3.5
+    usecase "Generacion de informe" as UC3.6
+}
+
+package "ESG" {
+    usecase "Analisis de ESG" as UC4.1
+}
+u --> UC1
+UC1 --> UC1.1
+UC1 --> UC1.2
+UC1 --> UC1.3
+UC1 --> UC1.4
+UC1 --> UC1.5
+UC1 --> UC1.6
+UC1 --> UC1.7
+UC1 --> UC1.8
+UC1 --> UC1.9
+u --> UC2
+UC2 --> UC2.1
+UC2 --> UC2.2
+u --> UC3
+UC3 --> UC3.1
+UC3 --> UC3.2
+UC3 --> UC3.3
+UC3 --> UC3.4
+UC3 --> UC3.5
+UC3 --> UC3.6
+u --> UC4
+UC4 --> UC4.1
+
+@enduml

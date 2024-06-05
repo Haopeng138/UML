@@ -1,0 +1,44 @@
+@startuml RAGPDF
+skinparam ComponentStyle rectangle
+
+actor User
+
+component PDF{
+}
+
+component Processor{
+    component query_Text{
+    }
+    component splitPDF{
+    }
+    component embedPDF{
+    }
+    component LLM{
+    }
+    component Mongoresponse{
+    }
+    component Response{
+    }
+    component embed_Query{
+    }
+
+}
+
+database MongoDB{
+}
+
+PDF --> splitPDF
+splitPDF --> LLM
+LLM --> embedPDF
+embedPDF --> MongoDB : 'Store Vectorized PDF'
+
+User --> query_Text : 'Ask question'
+query_Text --> LLM : 'Embed query'
+LLM --> embed_Query
+embed_Query --> MongoDB : ' Vector similarity search'
+MongoDB --> Mongoresponse : 'Return result'
+Mongoresponse --> LLM : 'As context '
+LLM --> Response : 'Return response'
+Response --> User
+
+@enduml

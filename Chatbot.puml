@@ -1,0 +1,14 @@
+@startuml "Diagrama de secuencia de Monitor web"
+
+left to right direction
+actor "Usuario" as u
+
+package "Asistente IA" {
+  usecase "Preguntas básicas" as Preguntas
+  usecase "Preguntas a pdf"  as Pdf
+}
+
+u -> Preguntas
+u -> Pdf
+
+@enduml

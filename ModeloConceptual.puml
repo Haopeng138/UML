@@ -1,0 +1,129 @@
+@startuml ModeloConceptual
+
+interface       User{
+    string: username
+    string: password
+    string: email
+    Role: role
+    List<User>: members
+    List<Project>: projects
+}
+
+interface      Project{
+    string: name
+    string: description
+    User: owner
+    members: List<User>
+    tasks: List<Task>
+    companies : List<Company>
+}
+
+interface      Task{
+    string: name
+    string: description
+    User: owner
+    Project: project
+}
+
+interface      Company{
+    string: name
+    string: description
+}
+
+interface CompanyFinancial{
+    List<KPI>: kpis
+    IncomeExpense: incomeExpense
+    BalanceSheet: balanceSheet
+    List<Ratios>: ratios
+    List<BalanaceSheet>: balanceSheetsComparative
+    ProfitLoss: profitLoss
+    GlobalComparison: globalComparison
+}
+
+interface CompanyCashFlow{
+    CashFlow: cashFlow
+    Hypotesis: hypotesis
+}
+
+interface CompanyValuation{
+    Valuation: valuation
+    CashFlow: cashFlow
+}
+
+interface CompanyESG{
+    ESG: esg
+}
+
+enum Role{
+    ADMIN
+    USER
+}
+
+enum TUnit{
+    PERCENTAGE
+    NUMBER
+    CURRENCY
+}
+
+class KPI{
+    string: name
+    unit: TUnit
+    number: value
+}
+
+class IncomeExpense{
+    List<number>: years
+    List<Income>: incomes
+    List<Expense>: expenses
+}
+
+class BalanceSheet{
+    List<number>: years
+    List<Asset>: assets
+    List<Liability>: liabilities
+}
+
+class Ratios{
+    List<number>: years
+    List<Ratio>: ratios
+}
+
+class ProfitLoss{
+    List<number>: years
+    List<Profit>: profits
+    List<Loss>: losses
+}
+
+class GlobalComparison{
+    List<number>: years
+    List<Global>: globals
+}
+
+class CashFlow{
+    List<number>: years
+    List<Flow>: flows
+}
+
+class Hypotesis{
+    List<Hypotesis>: hypotesis
+}
+
+class Valuation{
+    List<Valuation>: valuations
+}
+
+class ESG{
+    List<ESG>: esg
+}
+
+
+User "1" -- "N" Project
+User "1" -- "N" User
+Project "1" -- "N" Task
+Project "1" -- "N" Company
+Company "1" -- "1" CompanyFinancial
+Company "1" -- "1" CompanyCashFlow
+Company "1" -- "1" CompanyValuation
+Company "1" -- "1" CompanyESG
+
+@enduml

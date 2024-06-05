@@ -1,0 +1,35 @@
+@startuml "Diagrama de secuencia de generación de informe"
+
+actor "Usuario" as Usuario
+participant "Navegador" as N
+participant "Cloud Server" as S
+participant "Nginx" as Nginx 
+participant "Express" as Express
+participant "MySQL" as MySQL
+participant "PDF Generator" as PDF
+
+alt "Usuario autenticado"
+    Usuario -> N: Click en botón "Generar informe"
+    N -> S: Petición GET /pdf
+    S -> Nginx: Petición GET /pdf
+    Nginx -> Express: Petición GET /pdf
+    Express -> MySQL: Obtener datos 
+    MySQL -> Express: Datos 
+    Express -> PDF: POST /generate_pdf {datos}
+    PDF -> Express: informe.pdf
+    Express -> Nginx: informe.pdf
+    Nginx -> S: informe.pdf
+    S -> N: informe.pdf
+else "Usuario con credenciales caducados"
+    Usuario -> N: Click en botón "Generar informe"
+    N -> S: Petición GET /pdf
+    S -> Nginx: Petición GET /pdf
+    Nginx -> Express: Petición GET /pdf
+    Express -> Nginx: Redirección a /login
+    Nginx -> S: Redirección a /login
+    S -> N: Redirección a /login
+end
+
+
+
+@enduml

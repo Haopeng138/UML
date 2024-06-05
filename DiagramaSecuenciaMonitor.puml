@@ -1,0 +1,15 @@
+@startuml "Diagrama de secuencia de Monitor web"
+
+actor "Usuario Interno" as Usuario
+participant "DBManger Frontend" as Monitor
+participant "DBManger Backend" as Backend
+participant "MySQL" as MySQL
+
+Usuario -> Monitor: Visualizar KPIs de la base de datos
+Monitor -> Backend: GET /kpis
+Backend -> MySQL: Consultar datos de la base de datos
+MySQL -> Backend: Devolver datos de la base de datos
+Backend -> Monitor: Devolver datos de la base de datos
+Monitor -> Usuario: Mostrar datos de la base de datos
+
+@enduml

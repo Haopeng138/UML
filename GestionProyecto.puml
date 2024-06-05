@@ -1,0 +1,30 @@
+@startuml Gestión
+left to right direction
+actor Admin as u
+package "Gestión de proyectos" {
+    usecase UC1 as "Crear proyecto"
+    usecase UC2 as "Eliminar proyecto"
+    usecase UC3 as "Visualizar proyecto"
+    usecase UC4 as "Visualizar usuarios del proyecto"
+    usecase UC5 as "Añadir usuario al proyecto"
+    usecase UC6 as "Eliminar usuario del proyecto"
+    usecase UC7 as "Añadir compañía al proyecto"
+    usecase UC8 as "Eliminar compañía del proyecto"
+    usecase UC9 as "Añadir tarea al proyecto"
+    usecase UC10 as "Eliminar tarea del proyecto"
+    usecase UC11 as "Modificar tarea del proyecto"
+
+}
+u --> UC1
+u --> UC2
+u --> UC3
+u --> UC4
+u --> UC5
+u --> UC6
+u --> UC7
+u --> UC8
+u --> UC9
+u --> UC10
+u --> UC11
+
+@enduml

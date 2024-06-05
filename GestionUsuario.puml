@@ -1,0 +1,15 @@
+@startuml Gestión
+left to right direction
+actor Usuario as u
+package "Gestión de usuarios" {
+  usecase "Login" as UC1
+  usecase "Logout" as UC2
+  usecase "Crear Usuario" as UC3
+  usecase "Mirar informacion de usuario" as UC4
+}
+u --> UC1
+u --> UC2
+u --> UC3
+u --> UC4
+
+@enduml
