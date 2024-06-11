@@ -1,0 +1,26 @@
+@startuml "Diagrama de secuencia de Chatbot"
+
+actor "Usuario" as Usuario
+participant "Web" as web
+participant "Chatbot Server" as Chatbot
+participant "MongoDB" as MongoDB
+participant "Ollama" as Ollama
+
+Usuario -> web: Sube un pdf
+web -> Chatbot: POST /pdf Envia el pdf
+Chatbot -> MongoDB: Guarda el pdf
+Chatbot -> Ollama: POST /embeding Envia el pdf
+Ollama -> Chatbot: Embedings
+Chatbot -> MongoDB: Guarda los embedings
+Chatbot -> Usuario: 200 OK
+
+Usuario -> web: Hace una consulta a los pdf subidos
+web -> Chatbot: POST /pdf/query Envia la consulta
+Chatbot -> MongoDB: Busca por similitud
+MongoDB -> Chatbot: Documentos similares
+Chatbot -> Ollama: POST /api/chat
+Ollama -> Chatbot: Respuesta
+Chatbot -> Usuario: Respuesta
+
+
+@enduml

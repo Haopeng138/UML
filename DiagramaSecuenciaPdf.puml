@@ -15,7 +15,8 @@ alt "Usuario autenticado"
     Nginx -> Express: Petición GET /pdf
     Express -> MySQL: Obtener datos 
     MySQL -> Express: Datos 
-    Express -> PDF: POST /generate_pdf {datos}
+    Express -> PDF: POST /pdf {datos}
+    PDF -> PDF: GET /generate_pdf {datos}
     PDF -> Express: informe.pdf
     Express -> Nginx: informe.pdf
     Nginx -> S: informe.pdf

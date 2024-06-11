@@ -1,0 +1,40 @@
+@startuml ChatbotDataBase
+
+entity "Chat" as chat {
+  +int ChatID
+  +string ChatName
+}
+
+entity "Message" as message {
+  +int MessageID
+  +string MessageContent
+  +string PropmtContent
+  +int ChatID
+  +date MessageDate
+  +Usefulness Usefulness
+}
+
+enum Usefulness {
+    Useful
+    NotUseful
+    NotRated
+}
+
+entity "PDF" as pdf {
+  +int PDFID
+  +string PDFContent
+  +number[] PDFVectorized
+  +date PDFDate
+}
+
+entity "Preguntas y Respuestas" as preguntas {
+  +int PreguntasID
+  +string Pregunta
+  +string Respuesta
+  +int? PDFID
+}
+
+chat "1"----"N" message
+pdf "N"----"N" preguntas
+
+@enduml
