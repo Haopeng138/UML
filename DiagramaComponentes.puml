@@ -2,29 +2,27 @@
 
 cloud {
     [OVH]
-    package "Nginx" {
-        folder "Node Js"{
+    package "AccouRateNginx" {
+        folder "AccouRateBackend" {
             [Express]
         }
-        database "MySql" {
-            [Database]
+        database "AccouRateDatabase" {
+            [MySQL]
         }
-
-        folder "Docker"{
+        folder "Docker" {
             [Pdf Generator]
             [Company Validator]
-
         }
     }
 }
 
 cloud {
-    package "Assistant Server" {
-        folder "Flask Server" {
-            [Assistant Controller]
+    package "AssistantNginx" {
+        folder "AssistantBackend" {
+            [Flask]
         }
-        database "MongoDB" {
-            [Assistant Database]
+        database "Assistant Database" {
+            [MongoDB]
         }
     }
 }
@@ -33,36 +31,39 @@ package "API Gateway" {
     [Nginx Gateway]
 }
 
-package "External Database" {
+package "ThirdPartyDatabase" {
     [Eikon]
     [Sabi]
 }
 
-package "Web Browser" {
-    [Web React]
+package "AccourateFrontend" {
+    [React]
 }
 
-
-
-package "Internal Web Browser" {
+package "DBManager" {
     [DBManager Backend]
     [DBManager Frontend]
 }
 
-
-
 actor "User" as User
 actor "Internal User" as InternalUser
 
-User --> [Web Browser] : KeyBoard, Mouse
-InternalUser --> [Internal Web Browser] : KeyBoard, Mouse
-[Express] <--> [Database]: Local Connection
-[Express] <--> [Docker]: Local Connection
-[Express] <--> [External Database]: API Connection
-[Nginx] <--> [OVH]
-[API Gateway] <--> [OVH]: HTTP/HTTPS
-[DBManager Frontend] <--> [DBManager Backend]: Local Connection
-[DBManager Backend] <--> [OVH]: HTTP/HTTPS
-[Web Browser] <--> [API Gateway]: HTTP/HTTPS
-[API Gateway] <--> [Assistant Server]: HTTP/HTTPS
-[Assistant Server] <--> [OVH]: HTTP/HTTPS
+User --> [AccourateFrontend] : KeyBoard, Mouse
+InternalUser --> [DBManager] : KeyBoard, Mouse
+
+[Express] --> [AccouRateDatabase] 
+[Express] --> [Docker] 
+[Express] --> [ThirdPartyDatabase] : HTTP/HTTPS
+
+[AccouRateNginx] --> [OVH]
+[API Gateway] --> [OVH] : HTTP/HTTPS
+
+[DBManager Frontend] --> [DBManager Backend] : Local Connection
+[DBManager Backend] --> [OVH] : HTTP/HTTPS
+
+[AccourateFrontend] --> [API Gateway] : HTTP/HTTPS
+[API Gateway] --> [AssistantNginx] : HTTP/HTTPS
+[AssistantBackend] --> [Assistant Database] : HTTP/HTTPS
+[AssistantNginx] --> [OVH] : HTTP/HTTPS
+
+@enduml

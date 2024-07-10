@@ -1,15 +1,18 @@
 @startuml "Diagrama de secuencia de Monitor web"
 
 actor "Usuario Interno" as Usuario
-participant "DBManger Frontend" as Monitor
-participant "DBManger Backend" as Backend
+participant "DBMangerFrontend" as Monitor
+participant "DBMangerBackend" as Backend
+participant "AccouRateNginx" as Nginx
 participant "MySQL" as MySQL
 
 Usuario -> Monitor: Visualizar KPIs de la base de datos
 Monitor -> Backend: GET /kpis
-Backend -> MySQL: Consultar datos de la base de datos
-MySQL -> Backend: Devolver datos de la base de datos
-Backend -> Monitor: Devolver datos de la base de datos
-Monitor -> Usuario: Mostrar datos de la base de datos
+Backend -> Nginx: SQL Query
+Nginx -> MySQL: SQL Query
+MySQL -> Nginx: KPIs
+Nginx -> Backend: KPIs
+Backend -> Monitor: KPIs
+Monitor -> Usuario: KPIs
 
 @enduml

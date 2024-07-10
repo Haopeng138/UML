@@ -1,19 +1,19 @@
 @startuml "Diagrama de secuencia de generación de informe"
 
 actor "Usuario" as Usuario
-participant "Navegador" as N
-participant "Cloud Server" as S
-participant "Nginx" as Nginx 
-participant "Express" as Express
-participant "MySQL" as MySQL
+participant "AccouRateFrontend" as N
+participant "APIGateWay" as S
+participant "AccouRateNginx" as Nginx 
+participant "AccouRateBackend" as Express
+participant "AccouRateDatabase" as MySQL
 participant "PDF Generator" as PDF
 
 alt "Usuario autenticado"
     Usuario -> N: Click en botón "Generar informe"
-    N -> S: Petición GET /pdf
-    S -> Nginx: Petición GET /pdf
-    Nginx -> Express: Petición GET /pdf
-    Express -> MySQL: Obtener datos 
+    N -> S: Petición POST /pdf
+    S -> Nginx: Petición POST /pdf
+    Nginx -> Express: Petición POST /pdf
+    Express -> MySQL: Obtener datos compañia 
     MySQL -> Express: Datos 
     Express -> PDF: POST /pdf {datos}
     PDF -> PDF: GET /generate_pdf {datos}
@@ -23,12 +23,13 @@ alt "Usuario autenticado"
     S -> N: informe.pdf
 else "Usuario con credenciales caducados"
     Usuario -> N: Click en botón "Generar informe"
-    N -> S: Petición GET /pdf
-    S -> Nginx: Petición GET /pdf
-    Nginx -> Express: Petición GET /pdf
-    Express -> Nginx: Redirección a /login
-    Nginx -> S: Redirección a /login
-    S -> N: Redirección a /login
+    N -> S: Petición POST /pdf
+    S -> Nginx: Petición POST /pdf
+    Nginx -> Express: Petición POST /pdf
+    Express -> Nginx: Error 401
+    Nginx -> S: Error 401
+    S -> N: Error 401
+    N -> N: Redirigir a /login
 end
 
 

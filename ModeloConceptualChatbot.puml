@@ -1,0 +1,31 @@
+@startuml "Modelo Conceptual Chatbot"
+
+object Chat {
+    chatId
+    chatName
+}
+
+object Message {
+    messageId
+    userMessage
+    promptMessage
+    date
+    USEFULNESS
+}
+
+object PDF {
+    pdfId
+    pdfName
+    pdfContent
+    embedings
+}
+
+object USEFULNESS {
+    USEFUL
+    NOTUSEFUL
+    NOTRATED
+}
+
+Chat "1" -- "N" Message
+
+@enduml

@@ -1,0 +1,64 @@
+@startuml "ModeloConceptualAccouRateFrontend"
+
+object User {
+    username
+    password
+    mail
+    role
+}
+
+object Project {
+    name
+    description
+    creationDate
+    lastModificationDate
+}
+
+object Task {
+    name
+    description
+    creationDate
+    lastModificationDate
+}
+
+object Company {
+    name
+    description
+}
+
+object CompanyCashFlow {
+    CashFlow
+    Hypothesis
+}
+
+object CompanyFinancial {
+    KPIs
+    IncomeExpenses
+    BalanceSheets
+    Ratios
+    ProfitLoss
+    GlobalComparison
+}
+
+object CompanyValuation {
+    Valuation
+    Cashflow
+}
+
+object CompanyESG {
+    ESG
+}
+
+User "N" -- "N" Project
+Project "1" -- "N" Task
+Task "1" --> "N" User : AssignedTo
+Project "1" -- "N" Company
+Company  --> CompanyCashFlow
+Company --> CompanyFinancial
+Company --> CompanyValuation
+Company --> CompanyESG
+
+' Restricciones Textuales
+' 1 - Un usuario puede tener varios proyectos según su licencia
+' 2 - Un proyecto puede tener varios usuarios según la licencia de usuario principal
+@enduml

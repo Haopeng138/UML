@@ -1,26 +1,31 @@
 @startuml "Diagrama de secuencia de Chatbot"
 
 actor "Usuario" as Usuario
-participant "Web" as web
-participant "Chatbot Server" as Chatbot
-participant "MongoDB" as MongoDB
+participant "AccouRateFrontend" as web
+participant "APIGateway" as APIGateway
+participant "AssitantNginx" as Nginx
+participant "AssitantBackend" as Chatbot
 participant "Ollama" as Ollama
+participant "MongoDB" as MongoDB
 
-Usuario -> web: Sube un pdf
-web -> Chatbot: POST /pdf Envia el pdf
-Chatbot -> MongoDB: Guarda el pdf
-Chatbot -> Ollama: POST /embeding Envia el pdf
+
+Usuario -> web: Subir un pdf
+web -> APIGateway: POST /pdf
+APIGateway -> Nginx: POST /pdf
+Nginx -> Chatbot: POST /pdf
+Chatbot -> Ollama: POST /embeding
 Ollama -> Chatbot: Embedings
-Chatbot -> MongoDB: Guarda los embedings
+Chatbot -> MongoDB: Guardar pdf y embedings
 Chatbot -> Usuario: 200 OK
 
 Usuario -> web: Hace una consulta a los pdf subidos
-web -> Chatbot: POST /pdf/query Envia la consulta
+web -> Chatbot: POST /query {consulta}
+Chatbot -> Ollama: POST /embeding
+Ollama -> Chatbot: Embedings
 Chatbot -> MongoDB: Busca por similitud
 MongoDB -> Chatbot: Documentos similares
 Chatbot -> Ollama: POST /api/chat
 Ollama -> Chatbot: Respuesta
 Chatbot -> Usuario: Respuesta
-
 
 @enduml
