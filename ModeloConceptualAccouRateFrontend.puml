@@ -1,62 +1,152 @@
 @startuml "ModeloConceptualAccouRateFrontend"
 
 object User {
-    username
-    password
-    mail
-    role
+    username: string
+    password: string
+    mail: string
+    licencia: Licencia
+}
+
+object Licencia {
+    Basico
+    Premium
 }
 
 object Project {
-    name
-    description
-    creationDate
-    lastModificationDate
+    name: string
+    description: string
+    creationDate: Date
+    lastModificationDate: Date
 }
 
 object Task {
-    name
-    description
-    creationDate
-    lastModificationDate
+    name: string
+    description: string
+    creationDate: Date
+    lastModificationDate: Date
 }
 
 object Company {
-    name
-    description
+    name: string
+    description: string
 }
 
 object CompanyCashFlow {
-    CashFlow
-    Hypothesis
+    AddHypothesis()
+}
+
+object Hypothesis {
+    name: string
+    status: string
+}
+
+object CF {
+    investment: number
+    loans : number
 }
 
 object CompanyFinancial {
-    KPIs
-    IncomeExpenses
-    BalanceSheets
-    Ratios
-    ProfitLoss
-    GlobalComparison
+    SelectYear()
+}
+
+object GC {
+    name: string
+    unit: TUnit
+    companyValue: number
+    sectorValue: number
+}
+
+object PL {
+    target: string
+    name: string
+    interval: Array<number>
+    type: string
+}
+object Ratio {
+    year: number
+}
+
+object FinancialRatio {
+    name: string
+    unit: TUnit
+    values: Array<RatioMetric>
+}
+
+object RatioMetric {
+    company: number
+    sectorQ25: number
+    sectorMedian: number
+    sectorQ75: number
+    year: number
+}
+
+object BalanceSheet {
+    year: number
+    assets: number
+    liabilities: number
+    equity: number
+}
+
+object KPI {
+    name: string
+    value: number
+    unit: TUnit
+}
+
+object IncomeExpense {
+    year: number
+    income: number
+    expense: number
+}
+
+object TUnit {
+    €
+    %
+    None
 }
 
 object CompanyValuation {
-    Valuation
-    Cashflow
+    AddLoan()
+    AddInvestment()
+}
+
+object Valuation {
+    timeHorizon: number
+    discountedCashflows: number
+    discountedPerpetuityValue: number
+    npv: number
 }
 
 object CompanyESG {
-    ESG
+    Rating()
 }
 
-User "N" -- "N" Project
-Project "1" -- "N" Task
-Task "1" --> "N" User : AssignedTo
-Project "1" -- "N" Company
-Company  --> CompanyCashFlow
-Company --> CompanyFinancial
-Company --> CompanyValuation
-Company --> CompanyESG
+object ESG_Rating {
+    question: string
+    options: ESGQuestionOptions
+    rating: number
+}
+
+User "*" -- "*" Project
+Project "1" -- "*" Task
+Task "1" -- "*" User : AssignedTo
+Project "1" -- "*" Company
+Company  "1" -- "1" CompanyCashFlow
+Company "1" -- "1" CompanyFinancial
+CompanyFinancial "1" -- "*" KPI
+CompanyFinancial "1" -- "*" IncomeExpense
+CompanyFinancial "1" -- "*" BalanceSheet
+CompanyFinancial "1" -- "*" Ratio
+CompanyFinancial "1" -- "*" PL
+CompanyFinancial "1" -- "*" GC
+Company "1" -- "1" CompanyValuation
+Company "1" -- "1" CompanyESG
+CompanyESG "1" -- "*" ESG_Rating
+CompanyCashFlow "1" -- "*" Hypothesis
+Hypothesis "1" -- "*" CF
+Ratio "1" -- "*" FinancialRatio
+CompanyValuation "1" -- "*" Valuation
+CompanyValuation "1" -- "*" CF
 
 ' Restricciones Textuales
 ' 1 - Un usuario puede tener varios proyectos según su licencia

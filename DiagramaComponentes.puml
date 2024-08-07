@@ -1,12 +1,14 @@
 @startuml "Diagrama de Componentes"
 
+
+
 cloud {
-    [OVH]
+    [OVH] #LightBlue
     package "AccouRateNginx" {
-        folder "AccouRateBackend" {
+        folder "AccouRateBackend" #LightBlue{
             [Express]
         }
-        database "AccouRateDatabase" {
+        database "AccouRateDatabase" #LightBlue{
             [MySQL]
         }
         folder "Docker" {
@@ -27,11 +29,11 @@ cloud {
     }
 }
 
-package "API Gateway" {
+package "API Gateway" #LightBlue{
     [Nginx Gateway]
 }
 
-package "ThirdPartyDatabase" {
+package "ThirdPartyDatabase" #LightBlue {
     [Eikon]
     [Sabi]
 }
