@@ -8,8 +8,10 @@ proyecto --> compania
 principal --> compania
 compania --> analisisFinanciero
 analisisFinanciero --> dashboard
-dashboard --> peers
+analisisFinanciero --> peers
 compania --> cashflow
+cashflow --> peersMultiple
+cashflow --> dcf
 compania --> valoracion
 compania --> esg
 

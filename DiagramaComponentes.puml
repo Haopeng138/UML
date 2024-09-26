@@ -3,55 +3,55 @@
 
 
 cloud {
-    [OVH] #LightBlue
+    [OVH] 
     package "AccouRateNginx" {
-        folder "AccouRateBackend" #LightBlue{
+        folder "AccouRateBackend" {
             [Express]
         }
-        database "AccouRateDatabase" #LightBlue{
+        database "AccouRateDatabase"{
             [MySQL]
         }
-        folder "Docker" {
-            [Pdf Generator]
-            [Company Validator]
+        folder "Docker" #LightBlue {
+            [Pdf Generator] #LightBlue
+            [Company Validator] #LightBlue
         }
     }
 }
 
 cloud {
-    package "AssistantNginx" {
-        folder "AssistantBackend" {
-            [Flask]
+    package "ChatBotNginx" #LightBlue {
+        folder "ChatBotBackend" #LightBlue {
+            [Flask] #LightBlue
         }
-        database "Assistant Database" {
-            [MongoDB]
+        database "Chatbot Database" #LightBlue {
+            [MongoDB] #LightBlue
         }
     }
 }
 
-package "API Gateway" #LightBlue{
+package "API Gateway" {
     [Nginx Gateway]
 }
 
-package "ThirdPartyDatabase" #LightBlue {
+package "ThirdPartyDatabase"  {
     [Eikon]
     [Sabi]
 }
 
-package "AccourateFrontend" {
-    [React]
+package "AccourateFrontend" #LightBlue {
+    [React] #LightBlue
 }
 
-package "DBManager" {
-    [DBManager Backend]
-    [DBManager Frontend]
+package "MonitorWeb" #LightBlue {
+    [MonitorWeb Backend] #LightBlue
+    [MonitorWeb Frontend] #LightBlue
 }
 
 actor "User" as User
 actor "Internal User" as InternalUser
 
 User --> [AccourateFrontend] : KeyBoard, Mouse
-InternalUser --> [DBManager] : KeyBoard, Mouse
+InternalUser --> [MonitorWeb] : KeyBoard, Mouse
 
 [Express] --> [AccouRateDatabase] 
 [Express] --> [Docker] 
@@ -60,12 +60,12 @@ InternalUser --> [DBManager] : KeyBoard, Mouse
 [AccouRateNginx] --> [OVH]
 [API Gateway] --> [OVH] : HTTP/HTTPS
 
-[DBManager Frontend] --> [DBManager Backend] : Local Connection
-[DBManager Backend] --> [OVH] : HTTP/HTTPS
+[MonitorWeb Frontend] --> [MonitorWeb Backend] : Local Connection
+[MonitorWeb Backend] --> [OVH] : HTTP/HTTPS
 
 [AccourateFrontend] --> [API Gateway] : HTTP/HTTPS
-[API Gateway] --> [AssistantNginx] : HTTP/HTTPS
-[AssistantBackend] --> [Assistant Database] : HTTP/HTTPS
-[AssistantNginx] --> [OVH] : HTTP/HTTPS
+[API Gateway] --> [ChatBotNginx] : HTTP/HTTPS
+[ChatBotBackend] --> [Chatbot Database] : HTTP/HTTPS
+[ChatBotNginx] --> [OVH] : HTTP/HTTPS
 
 @enduml
