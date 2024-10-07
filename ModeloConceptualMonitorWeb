@@ -1,0 +1,9 @@
+@startuml ModeloConceptualMonitorWeb
+
+object KPIs {
+
+}
+
+
+
+@enduml

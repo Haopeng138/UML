@@ -1,154 +1,137 @@
 @startuml "ModeloConceptualAccouRateFrontend"
 
 object User {
-    username: string
-    password: string
-    mail: string
-    licencia: Licencia
+    <u>string: userId
+    string: username
+    string: password
+    string: email
+    Role: role
+    License: license
 }
 
-object Licencia {
-    Basico
-    Premium
+object License {
+    <u>string: licenseId
+    string: licenseName
+    int: maxProjects
+    int: maxUsers
+}
+
+object Role {
+    Analyst
+    Visualizer
+    Manager
 }
 
 object Project {
-    name: string
-    description: string
-    creationDate: Date
-    lastModificationDate: Date
+    <u>string: projectId
+    string: projectName
+    string: projectDescription
+    License: license
 }
 
 object Task {
-    name: string
-    description: string
-    creationDate: Date
-    lastModificationDate: Date
+    <u>string: taskId
+    string: taskName
+    string: taskDescription
+    TaskStatus: taskStatus
+    Project: project
+}
+
+object TaskStatus {
+    ToDo
+    InProgress
+    Completed
+}
+
+object Sector {
+    <u>string: sectorId
+    string: sectorName
 }
 
 object Company {
-    name: string
-    description: string
+    <u>string: companyId
+    string: companyName
+    string: companyDescription
+    string: country
 }
 
-object CompanyCashFlow {
-    AddHypothesis()
+object DataProvider {
+    <u>string: dataProviderId
+    string: dataProviderName
 }
 
-object Hypothesis {
-    name: string
-    status: string
+object ProviderAlias {
+    string: providerAliasId
+    string: statementId
+    <u>string: providerAliasName
+    <u>string: statementId
 }
 
-object CF {
-    investment: number
-    loans : number
+object Functionality {
+    <u>string: functionalityId
+    string: functionalityName
+    string: functionalityDescription
 }
 
-object CompanyFinancial {
-    SelectYear()
+object Statement {
+    <u>string: statementId
+    string: statementName
+    string: statementDescription
+    StatementType: statementType
+    number: value
+    number: fiscalYear
+
 }
 
-object GC {
-    name: string
-    unit: TUnit
-    companyValue: number
-    sectorValue: number
+object StatementType {
+    TOTAL
+    SUBTOTAL
+    ITEM
+    SUBITEM
 }
 
-object PL {
-    target: string
-    name: string
-    interval: Array<number>
-    type: string
-}
-object Ratio {
-    year: number
-}
-
-object FinancialRatio {
-    name: string
-    unit: TUnit
-    values: Array<RatioMetric>
-}
-
-object RatioMetric {
-    company: number
-    sectorQ25: number
-    sectorMedian: number
-    sectorQ75: number
-    year: number
-}
-
-object BalanceSheet {
-    year: number
-    assets: number
-    liabilities: number
-    equity: number
-}
-
-object KPI {
-    name: string
-    value: number
-    unit: TUnit
-}
-
-object IncomeExpense {
-    year: number
-    income: number
-    expense: number
+object Ratios {
+    <u>string: ratioId
+    string: ratioId
+    string: ratioName
+    TUnit: unit
+    number: value
+    number: year
 }
 
 object TUnit {
-    €
-    %
+    PERCENTAGE
+    NUMBER
     None
 }
 
-object CompanyValuation {
-    AddLoan()
-    AddInvestment()
+object Hypothesis {
+    <u>string: hypothesisId
+    string: hypothesisName
 }
 
-object Valuation {
-    timeHorizon: number
-    discountedCashflows: number
-    discountedPerpetuityValue: number
-    npv: number
-}
+User "*" -- "1" License: "Has"
+User "*" -- "*" Project: "Has"
+Project "*" -- "*" Task: "Has"
+Project "*" -- "*" Company: "Analyze"
+Company "*" -- "1" Sector: "Belongs to"
+Company "*" -- "*" Functionality: "Has"
+Company "*" -- "*" Statement: "Has"
+Company "*" -- "*" Ratios: "Has"
+Functionality "*" -- "*" Hypothesis: "Has"
+User "*" -- "*" Functionality: "Has access to"
+DataProvider "*" -- "*" Statement: "Provides"
+(DataProvider, Statement) "*" . "*" ProviderAlias
 
-object CompanyESG {
-    Rating()
-}
 
-object ESG_Rating {
-    question: string
-    options: ESGQuestionOptions
-    rating: number
-}
 
-User "*" -- "*" Project
-Project "1" -- "*" Task
-Task "1" -- "*" User : AssignedTo
-Project "1" -- "*" Company
-Company  "1" -- "1" CompanyCashFlow
-Company "1" -- "1" CompanyFinancial
-CompanyFinancial "1" -- "*" KPI
-CompanyFinancial "1" -- "*" IncomeExpense
-CompanyFinancial "1" -- "*" BalanceSheet
-CompanyFinancial "1" -- "*" Ratio
-CompanyFinancial "1" -- "*" PL
-CompanyFinancial "1" -- "*" GC
-Company "1" -- "1" CompanyValuation
-Company "1" -- "1" CompanyESG
-CompanyESG "1" -- "*" ESG_Rating
-CompanyCashFlow "1" -- "*" Hypothesis
-Hypothesis "1" -- "*" CF
-Ratio "1" -- "*" FinancialRatio
-CompanyValuation "1" -- "*" Valuation
-CompanyValuation "1" -- "*" CF
 
 ' Restricciones Textuales
-' 1 - Un usuario puede tener varios proyectos según su licencia
-' 2 - Un proyecto puede tener varios usuarios según la licencia de usuario principal
+' Clave primaria de User(userId), License(licenseId), Role(roleId), Project(projectId), Task(taskId), Sector(sectorId), Company(companyId), Functionality(functionalityId), Statement(statementId), Ratios(ratioId), Hypothesis(hypothesisId)
+' 2 En una licencia no puede superar el numero de proyectos maximos y el numero de usuarios maximos
+' 3 Un usuario solo puede tener una licencia
+' 4 Un usuario puede tener varios roles segun el proyecto en el que esté trabajando
+' 5 Solamente la funcionalidad 'DCF' tiene hipotesis
+' 6 Un usuario puede acceder a diferentes funcionalidades según su rol
+
 @enduml

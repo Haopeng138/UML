@@ -1,23 +1,23 @@
 @startuml "Modelo Conceptual Chatbot"
 
 object Chat {
-    chatId
-    chatName
+    <u>string: chatId
+    string: chatName
 }
 
 object Message {
-    messageId
-    userMessage
-    promptMessage
-    date
-    USEFULNESS
+    <u>string: messageId
+    string: userMessage
+    string: promptMessage
+    data: date
+    USEFULNESS: usefulness
 }
 
 object PDF {
-    pdfId
-    pdfName
-    pdfContent
-    embedings
+    <u>string: pdfId
+    string: pdfName
+    string: pdfContent
+    numbers: embeddings
 }
 
 object USEFULNESS {
