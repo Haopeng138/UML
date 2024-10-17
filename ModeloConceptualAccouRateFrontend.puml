@@ -1,19 +1,18 @@
 @startuml "ModeloConceptualAccouRateFrontend"
 
 object User {
-    <u>string: userId
-    string: username
-    string: password
-    string: email
-    Role: role
-    License: license
+    <u> userId: string
+    username: string
+    password: string
+    email: string
+    role: Role
 }
 
 object License {
-    <u>string: licenseId
-    string: licenseName
-    int: maxProjects
-    int: maxUsers
+    <u> licenseId: string
+    licenseName: string
+    maxProjects: int
+    maxUsers: int
 }
 
 object Role {
@@ -23,18 +22,16 @@ object Role {
 }
 
 object Project {
-    <u>string: projectId
-    string: projectName
-    string: projectDescription
-    License: license
+    <u> projectId: string
+    projectName: string
+    projectDescription: string
 }
 
 object Task {
-    <u>string: taskId
-    string: taskName
-    string: taskDescription
-    TaskStatus: taskStatus
-    Project: project
+    <u> taskId: string
+    taskName: string
+    taskDescription: string
+    taskStatus: TaskStatus
 }
 
 object TaskStatus {
@@ -44,43 +41,40 @@ object TaskStatus {
 }
 
 object Sector {
-    <u>string: sectorId
-    string: sectorName
+    <u> sectorId: string
+    sectorName: string
 }
 
 object Company {
-    <u>string: companyId
-    string: companyName
-    string: companyDescription
-    string: country
+    <u> companyId: string
+    companyName: string
+    companyDescription: string
+    country: string
 }
 
 object DataProvider {
-    <u>string: dataProviderId
-    string: dataProviderName
+    <u> dataProviderId: string
+    dataProviderName: string
 }
 
 object ProviderAlias {
-    string: providerAliasId
-    string: statementId
-    <u>string: providerAliasName
-    <u>string: statementId
+    <u> providerAliasId: string
+    statementId: string
 }
 
 object Functionality {
-    <u>string: functionalityId
-    string: functionalityName
-    string: functionalityDescription
+    <u> functionalityId: string
+    functionalityName: string
+    functionalityDescription: string
 }
 
 object Statement {
-    <u>string: statementId
-    string: statementName
-    string: statementDescription
-    StatementType: statementType
-    number: value
-    number: fiscalYear
-
+    <u> statementId: string
+    statementName: string
+    statementDescription: string
+    statementType: StatementType
+    value: number
+    fiscalYear: number
 }
 
 object StatementType {
@@ -91,12 +85,11 @@ object StatementType {
 }
 
 object Ratios {
-    <u>string: ratioId
-    string: ratioId
-    string: ratioName
-    TUnit: unit
-    number: value
-    number: year
+    <u> ratioId: string
+    ratioName: string
+    unit: TUnit
+    value: number
+    year: number
 }
 
 object TUnit {
@@ -106,12 +99,13 @@ object TUnit {
 }
 
 object Hypothesis {
-    <u>string: hypothesisId
-    string: hypothesisName
+    <u> hypothesisId: string
+    hypothesisName: string
 }
 
 User "*" -- "1" License: "Has"
 User "*" -- "*" Project: "Has"
+Project "*" -- "1" License: "Belongs to" 
 Project "*" -- "*" Task: "Has"
 Project "*" -- "*" Company: "Analyze"
 Company "*" -- "1" Sector: "Belongs to"
